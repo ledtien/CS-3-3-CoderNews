@@ -4,21 +4,31 @@
 const url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=cb7543222fe6414f8180cd191cc7a217";
 
 
-function fetchData() {
-
-    const promise = fetch(url);
-    promise
-        .then(res => res.json())
-        .then((data) => renderArticles(data.articles));
-       
+async function fetchData() {
+    const response = await fetch(url);
+    const data = await response.json();
+    renderArticles(data.articles)   
+    console.log({data})  
 }
     fetchData(); 
 
-    
+
 function renderArticles(articles) {
     console.log({aSingleArticle: articles[0]})
     const articlesHTMLArray = articles.map(a => {
-        return ` <h1>${a.title} </h1>`
+        return ` <div class="card mb-5">
+        <img src="${a.urlToImage}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div style = "font-size: small; font-style: italic; display: flex; justify-content: space-between">
+                <div>${a.source.name} </div>
+                <div> ${a.publishedAt} </div>
+            </div>
+            <div style = "font-size: medium; margin-top: 10px"> ${a.author} </div>
+          <h5 class="card-title">${a.title}</h5>
+          <p class="card-text">${a.description}</p>
+          <a href="${a.url}" class="card-link">Link</a>
+        </div>
+      </div>`
     })
      document.getElementById('new-list').innerHTML = articlesHTMLArray.join('');
 }
