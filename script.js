@@ -23,7 +23,8 @@ function renderArticles(articles) {
         <div class="card-body">
             <div style = "font-size: small; font-style: italic; display: flex; justify-content: space-between">
                 <div>${a.source.name} </div>
-                <div> ${a.publishedAt} </div>
+                <div> ${moment(a.publishedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+                <div> ${moment(a.publishedAt).startOf('minutes').fromNow()} </div>
             </div>
             <div style = "font-size: medium; margin-top: 10px"> ${a.author} </div>
           <h5 class="card-title">${a.title}</h5>
